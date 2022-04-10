@@ -1,0 +1,3 @@
+bcryptjs
+@types/bcryptjs
+express-async-errors
