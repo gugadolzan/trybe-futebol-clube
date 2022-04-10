@@ -3,6 +3,7 @@ import StatusCodes from '../utils/StatusCodes';
 
 const customErrors: { [key: string]: number } = {
   'All fields must be filled': StatusCodes.UNAUTHORIZED,
+  'Club not found': StatusCodes.NOT_FOUND,
   'Incorrect email or password': StatusCodes.UNAUTHORIZED,
   'Internal server error': StatusCodes.INTERNAL_SERVER_ERROR,
   'Invalid token': StatusCodes.UNAUTHORIZED,
