@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
+export { default as Club } from './club.service';
 export { default as User } from './user.service';
