@@ -1,4 +1,7 @@
+import 'express-async-errors';
 import * as express from 'express';
+import * as cors from 'cors';
+import routes from './routes';
 
 class App {
   public app: express.Express;
@@ -16,7 +19,10 @@ class App {
       next();
     };
 
+    this.app.use(cors());
+    this.app.use(express.json());
     this.app.use(accessControl);
+    this.app.use('/', routes);
   }
 
   public start(PORT: string | number): void {
@@ -28,5 +34,4 @@ class App {
 
 export { App };
 
-// A execução dos testes de cobertura depende dessa exportação
 export const { app } = new App();
