@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
-import Match from '../database/models/match.model';
 import * as services from '../services';
-import throwNewError from '../utils/throwNewError';
 
 export default class MatchController {
   public static async getAll(req: Request, res: Response) {
@@ -10,24 +8,7 @@ export default class MatchController {
   }
 
   public static async create(req: Request, res: Response) {
-    const match = {
-      homeTeam: req.body.homeTeam,
-      awayTeam: req.body.awayTeam,
-      homeTeamGoals: req.body.homeTeamGoals || req.body.homeGoals,
-      awayTeamGoals: req.body.awayTeamGoals || req.body.awayGoals,
-      inProgress: true,
-    } as Match;
-
-    if (
-      match.homeTeam === undefined
-      || match.awayTeam === undefined
-      || match.homeTeamGoals === undefined
-      || match.awayTeamGoals === undefined
-    ) {
-      return throwNewError('All fields must be filled', 401);
-    }
-
-    const createdMatch = await services.Match.create(match);
+    const createdMatch = await services.Match.create(req.body);
     res.status(201).json(createdMatch);
   }
 
