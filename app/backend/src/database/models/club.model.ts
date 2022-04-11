@@ -33,8 +33,8 @@ Club.init(
 );
 
 // Associations
-Match.belongsTo(Club, { foreignKey: 'homeTeam' });
-Match.belongsTo(Club, { foreignKey: 'awayTeam' });
+Match.belongsTo(Club, { foreignKey: 'homeTeam', as: 'homeClub' });
+Match.belongsTo(Club, { foreignKey: 'awayTeam', as: 'awayClub' });
 
 Club.hasMany(Match, { foreignKey: 'homeTeam', as: 'homeTeamMatches' });
 Club.hasMany(Match, { foreignKey: 'awayTeam', as: 'awayTeamMatches' });
