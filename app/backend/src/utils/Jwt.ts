@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as jwt from 'jsonwebtoken';
-import { SafeUser } from '../domain';
+import User from '../database/models/user.model';
 
 export default class Jwt {
   private static _options: jwt.SignOptions = {
@@ -12,7 +12,7 @@ export default class Jwt {
     .readFileSync('./jwt.evaluation.key')
     .toString();
 
-  public static generateToken(payload: SafeUser) {
+  public static generateToken(payload: User) {
     return jwt.sign(payload, this._privateKey, this._options);
   }
 
