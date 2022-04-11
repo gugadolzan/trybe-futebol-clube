@@ -36,12 +36,18 @@ export default class MatchService {
     ]);
     if (!homeClub || !awayClub) return throwNewError('There is no team with such id!', 401);
 
-    return Match.create(match);
+    return Match.create({ ...match, inProgress: true });
   }
 
   public static async finish(id: number) {
     const match = await Match.findOne({ where: { id } });
     if (!match) return throwNewError('Match not found', 404);
     return match.update({ inProgress: false });
+  }
+
+  public static async update(id: number, payload: Match) {
+    const match = await Match.findOne({ where: { id } });
+    if (!match) return throwNewError('Match not found', 404);
+    return match.update(payload);
   }
 }

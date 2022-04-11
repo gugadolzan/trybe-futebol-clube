@@ -16,4 +16,9 @@ export default class MatchController {
     const match = await services.Match.finish(Number(req.params.id));
     res.status(200).json(match);
   }
+
+  public static async update(req: Request, res: Response) {
+    const match = await services.Match.update(Number(req.params.id), req.body);
+    res.status(200).json(match);
+  }
 }
