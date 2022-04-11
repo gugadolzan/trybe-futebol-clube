@@ -7,7 +7,9 @@ const customErrors: { [key: string]: number } = {
   'Incorrect email or password': StatusCodes.UNAUTHORIZED,
   'Internal server error': StatusCodes.INTERNAL_SERVER_ERROR,
   'Invalid token': StatusCodes.UNAUTHORIZED,
+  'It is not possible to create a match with two equal teams': StatusCodes.UNAUTHORIZED,
   'No token provided': StatusCodes.UNAUTHORIZED,
+  'There is no team with such id!': StatusCodes.UNAUTHORIZED,
 };
 
 export default class ErrorMiddleware {
