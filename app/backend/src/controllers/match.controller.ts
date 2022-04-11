@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Match from '../database/models/match.model';
 import * as services from '../services';
+import throwNewError from '../utils/throwNewError';
 
 export default class MatchController {
   public static async getAll(req: Request, res: Response) {
@@ -23,7 +24,7 @@ export default class MatchController {
       || match.homeTeamGoals === undefined
       || match.awayTeamGoals === undefined
     ) {
-      throw new Error('All fields must be filled');
+      return throwNewError('All fields must be filled', 401);
     }
 
     const createdMatch = await services.Match.create(match);

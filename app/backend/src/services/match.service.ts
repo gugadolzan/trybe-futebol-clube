@@ -1,6 +1,7 @@
 import * as Sequelize from 'sequelize';
 import Match from '../database/models/match.model';
 import Club from '../database/models/club.model';
+import throwNewError from '../utils/throwNewError';
 import ClubService from './club.service';
 
 export default class MatchService {
@@ -23,8 +24,9 @@ export default class MatchService {
 
   public static async create(match: Match) {
     if (match.homeTeam === match.awayTeam) {
-      throw new Error(
+      return throwNewError(
         'It is not possible to create a match with two equal teams',
+        401,
       );
     }
 
@@ -32,17 +34,14 @@ export default class MatchService {
       ClubService.getById(match.homeTeam),
       ClubService.getById(match.awayTeam),
     ]);
-    if (!homeClub || !awayClub) {
-      throw new Error('There is no team with such id!');
-    }
+    if (!homeClub || !awayClub) return throwNewError('There is no team with such id!', 401);
 
     return Match.create(match);
   }
 
   public static async finish(id: number) {
     const match = await Match.findOne({ where: { id } });
-    if (!match) throw new Error('There is no match with such id!');
-
+    if (!match) return throwNewError('Match not found', 404);
     return match.update({ inProgress: false });
   }
 }

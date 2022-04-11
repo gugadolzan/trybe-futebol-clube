@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import * as services from '../services';
+import throwNewError from '../utils/throwNewError';
 
 export default class ClubController {
   public static async getAll(_req: Request, res: Response) {
@@ -9,7 +10,7 @@ export default class ClubController {
 
   public static async getById(req: Request, res: Response) {
     const club = await services.Club.getById(Number(req.params.id));
-    if (!club) throw new Error('Club not found');
+    if (!club) return throwNewError('Club not found', 404);
     res.status(200).json(club);
   }
 }
