@@ -21,4 +21,14 @@ export default class MatchController {
     const match = await services.Match.update(Number(req.params.id), req.body);
     res.status(200).json(match);
   }
+
+  public static async getLeaderboardBySide(req: Request, res: Response) {
+    const leaderboard = await services.Match.getLeaderboardBySide(req.path === '/home');
+    res.status(200).json(leaderboard);
+  }
+
+  public static async getLeaderboard(req: Request, res: Response) {
+    const leaderboard = await services.Match.getLeaderboard();
+    res.status(200).json(leaderboard);
+  }
 }
