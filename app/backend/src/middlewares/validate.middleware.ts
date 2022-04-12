@@ -7,8 +7,8 @@ export default class ValidateMiddleware {
     const match = {
       homeTeam: req.body.homeTeam,
       awayTeam: req.body.awayTeam,
-      homeTeamGoals: req.body.homeTeamGoals || req.body.homeGoals,
-      awayTeamGoals: req.body.awayTeamGoals || req.body.awayGoals,
+      homeTeamGoals: req.body.homeTeamGoals || req.body.homeGoals || 0,
+      awayTeamGoals: req.body.awayTeamGoals || req.body.awayGoals || 0,
       inProgress: true,
     } as Match;
 
