@@ -1,4 +1,5 @@
 import * as Sequelize from 'sequelize';
+import Leaderboard from '../classes/Leaderboard';
 import Match from '../database/models/match.model';
 import Club from '../database/models/club.model';
 import throwNewError from '../utils/throwNewError';
@@ -49,5 +50,18 @@ export default class MatchService {
     const match = await Match.findOne({ where: { id } });
     if (!match) return throwNewError('Match not found', 404);
     return match.update(payload);
+  }
+
+  public static async getLeaderboard(isHomeTeam?: boolean) {
+    const [clubs, matches] = await Promise.all([
+      ClubService.getAll(),
+      MatchService.getAll(),
+    ]);
+
+    const leaderboard = new Leaderboard(clubs, matches);
+
+    return isHomeTeam === undefined
+      ? leaderboard.getLeaderboard()
+      : leaderboard.getLeaderboardBySide(isHomeTeam);
   }
 }
