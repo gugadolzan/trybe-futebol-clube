@@ -22,13 +22,15 @@ export default class MatchController {
     res.status(200).json(match);
   }
 
-  public static async getLeaderboardBySide(req: Request, res: Response) {
-    const leaderboard = await services.Match.getLeaderboardBySide(req.path === '/home');
-    res.status(200).json(leaderboard);
-  }
-
   public static async getLeaderboard(req: Request, res: Response) {
-    const leaderboard = await services.Match.getLeaderboard();
+    let leaderboard;
+
+    if (req.path === '/home' || req.path === '/away') {
+      leaderboard = await services.Match.getLeaderboard(req.path === '/home');
+    } else {
+      leaderboard = await services.Match.getLeaderboard();
+    }
+
     res.status(200).json(leaderboard);
   }
 }
